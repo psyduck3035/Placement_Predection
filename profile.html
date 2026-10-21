@@ -1,0 +1,252 @@
+
+{% extends "base.html" %}
+
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="eyebrow">STUDENT PROFILE</p>
+    <h1>Complete your profile first</h1>
+    <p class="muted">
+        Step 1 of 3 · Complete your academics, skills, experience
+        and preferred career role. Next, upload your resume and
+        review its ATS score. All fields are required.
+    </p>
+
+    {% if profile_complete %}
+        <div class="profile-complete-badge">
+            ✓ Profile details complete · Next: resume upload
+        </div>
+    {% else %}
+        <div class="profile-complete-badge incomplete">
+            Step 1 · Save your profile to continue
+        </div>
+    {% endif %}
+</section>
+
+<form method="post" class="profile-form" id="student-profile-form">
+
+    <!-- Academics and Experience -->
+    <div class="form-section">
+        <h3>Academics &amp; Experience</h3>
+
+        <div class="field-grid">
+
+            <label>
+                University name
+                <input
+                    type="text"
+                    name="university"
+                    maxlength="190"
+                    required
+                    value="{{ profile.university if profile and profile.university else '' }}"
+                    placeholder="Enter university name">
+            </label>
+
+            <label>
+                Faculty / stream
+                <select name="stream" required>
+                    <option value="" disabled
+                        {% if not profile or not profile.stream %}selected{% endif %}>
+                        -- Choose a stream --
+                    </option>
+                    {% for stream in [
+                        'Science', 'Commerce', 'Arts',
+                        'Engineering & Technology',
+                        'Management', 'Other'
+                    ] %}
+                    <option value="{{ stream }}"
+                        {% if profile and profile.stream == stream %}selected{% endif %}>
+                        {{ stream }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <label>
+                Degree / programme
+                <select name="degree" required>
+                    <option value="" disabled
+                        {% if not profile or not profile.degree %}selected{% endif %}>
+                        -- Choose a degree / programme --
+                    </option>
+                    {% for degree in [
+                        'B.Sc. Computer Science',
+                        'B.Sc. Information Technology',
+                        'B.Sc. Data Science',
+                        'B.Sc. Biotechnology',
+                        'B.Sc. Microbiology',
+                        'B.Sc. Physics',
+                        'B.Sc. Chemistry',
+                        'B.Sc. Mathematics',
+                        'B.Sc. Statistics',
+                        'B.Sc. Life Sciences',
+                        'B.Sc. Electronics',
+                        'B.Sc. Environmental Science',
+                        'B.Sc. Botany',
+                        'B.Sc. Zoology',
+                        'B.Sc. Geology',
+                        'B.Sc. Bioinformatics',
+                        'B.Sc. Forensic Science',
+                        'Other Science programme',
+                        'BCA', 'B.E. / B.Tech', 'Other'
+                    ] %}
+                    <option value="{{ degree }}"
+                        {% if profile and profile.degree == degree %}selected{% endif %}>
+                        {{ degree }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <label>
+                10th / SSC (%)
+                <input
+                    type="number"
+                    name="tenth_percentage"
+                    min="0" max="100" step="0.01"
+                    required
+                    value="{{ profile.tenth_percentage if profile and profile.tenth_percentage is not none else '' }}"
+                    placeholder="Enter percentage">
+            </label>
+
+            <label>
+                12th / HSC (%)
+                <input
+                    type="number"
+                    name="twelfth_percentage"
+                    min="0" max="100" step="0.01"
+                    required
+                    value="{{ profile.twelfth_percentage if profile and profile.twelfth_percentage is not none else '' }}"
+                    placeholder="Enter percentage">
+            </label>
+
+            <label>
+                CGPA (0–10)
+                <input
+                    type="number"
+                    name="cgpa"
+                    min="0" max="10" step="0.01"
+                    required
+                    value="{{ profile.cgpa if profile and profile.cgpa is not none else '' }}"
+                    placeholder="Enter CGPA">
+            </label>
+
+            <label>
+                Active backlogs
+                <input
+                    type="number"
+                    name="backlogs"
+                    min="0" max="30" step="1"
+                    required
+                    value="{{ profile.backlogs if profile and profile.backlogs is not none else '' }}"
+                    placeholder="Enter number of backlogs">
+            </label>
+
+            <label>
+                Projects completed
+                <input
+                    type="number"
+                    name="projects"
+                    min="0" max="30" step="1"
+                    required
+                    value="{{ profile.projects if profile and profile.projects is not none else '' }}"
+                    placeholder="Enter number of projects">
+            </label>
+
+            <label>
+                Internships completed
+                <input
+                    type="number"
+                    name="internships"
+                    min="0" max="20" step="1"
+                    required
+                    value="{{ profile.internships if profile and profile.internships is not none else '' }}"
+                    placeholder="Enter number of internships">
+            </label>
+
+            <label>
+                Preferred role
+                <select name="preferred_role" required>
+                    <option value="" disabled
+                        {% if not profile or not profile.preferred_role %}selected{% endif %}>
+                        -- Choose a preferred role --
+                    </option>
+                    {% for role in [
+                        'Software Developer',
+                        'Data Analyst',
+                        'Data Scientist / ML Engineer',
+                        'Web Developer',
+                        'Cybersecurity Analyst',
+                        'Database Administrator',
+                        'QA / Test Engineer',
+                        'Business Analyst',
+                        'UI/UX Designer',
+                        'Network Engineer',
+                        'Cloud / DevOps Engineer',
+                        'ERP Consultant'
+                    ] %}
+                    <option value="{{ role }}"
+                        {% if profile and profile.preferred_role == role %}selected{% endif %}>
+                        {{ role }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </label>
+
+        </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="form-section">
+        <h3>Current skill self-rating</h3>
+
+        <p class="muted">
+            Rate your current skills from 0 to 100.
+            These ratings contribute to your career readiness report.
+        </p>
+
+        <div class="field-grid">
+
+            {% for field, label in [
+                ('coding', 'Coding / programming'),
+                ('communication', 'Communication'),
+                ('sql', 'SQL / databases'),
+                ('web', 'Web development'),
+                ('problem_solving', 'Problem solving')
+            ] %}
+
+            <label>
+                {{ label }} (0–100)
+                <input
+                    type="number"
+                    name="{{ field }}"
+                    min="0" max="100" step="1"
+                    required
+                    value="{{ profile[field] if profile and profile[field] is not none else '' }}"
+                    placeholder="Enter rating from 0 to 100">
+            </label>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="step-footer">
+        <div>
+            <span class="step-indicator">STEP 1 OF 3</span>
+            <p class="muted">
+                Next: upload your resume and review the ATS analysis.
+            </p>
+        </div>
+
+        <button class="btn primary" type="submit">
+            Save profile &amp; Next →
+        </button>
+    </div>
+
+</form>
+
+{% endblock %}

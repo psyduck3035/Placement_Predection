@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Resume & ATS{% endblock %}{% block content %}
+<section class="page-heading"><p class="eyebrow">STEP 2 OF 3 · RESUME + ATS</p><h1>Upload your resume</h1><p class="muted">Step 2 of 3. Upload a text-readable PDF, DOCX or TXT. PathPilot extracts education, skills, coding languages and strengths, saves them to your profile, and scores the resume for ATS readiness. Then review the score and continue to the assessment.</p></section>
+<div class="resume-layout">
+<section class="form-section resume-upload-card"><div class="upload-icon">↑</div><h2>Upload resume</h2><p class="muted">Maximum 5 MB · PDF / DOCX / TXT</p><form method="post" enctype="multipart/form-data"><input class="resume-input" type="file" name="resume" accept=".pdf,.docx,.txt" required><button class="btn primary" type="submit">Save resume & Next →</button></form></section>
+<section class="form-section"><h2>What will be extracted?</h2><div class="extract-grid"><div><b>10th / SSC</b><span>Percentage</span></div><div><b>12th / HSC</b><span>Percentage</span></div><div><b>Skills</b><span>Technical skills</span></div><div><b>Coding</b><span>Programming languages</span></div><div><b>Strengths</b><span>Communication, teamwork, analytical etc.</span></div><div><b>ATS score</b><span>Keywords + structure</span></div></div></section>
+</div>
+{% if profile and profile.resume_filename %}<section class="form-section"><h2>Saved resume profile</h2><p><strong>{{ profile.resume_filename }}</strong> · ATS score <strong>{{ profile.ats_score }}/100</strong></p><a class="btn primary" href="{{ url_for('ats_analysis') }}">Review ATS score & Next →</a></section>{% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}PathPilot AI — Placement & Career{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy"><p class="eyebrow">AI-ASSISTED CAREER READINESS</p><h1>Know your strengths.<br><span>Build your next step.</span></h1>
+  <p class="lead">Assess aptitude, understand skill gaps, and explore career paths with one student-focused platform.</p>
+  <div class="actions"><a class="btn primary" href="{{ url_for('register') }}">Create student account</a><a class="btn secondary" href="{{ url_for('login') }}">Sign in</a></div>
+  <p class="fine">Demo estimates are educational only—not guarantees of employment.</p></div>
+  <div class="hero-panel"><div class="panel-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="panel-label">STUDENT SNAPSHOT</span></div>
+    <div class="score-ring"><div><strong>80</strong><small>APTITUDE SCORE</small></div></div>
+    <div class="mini-bars"><div><span>Logical reasoning</span><i style="--w:84%"></i></div><div><span>Technical skills</span><i style="--w:88%"></i></div><div><span>Verbal ability</span><i style="--w:72%"></i></div></div>
+    <p class="fine">Illustrative preview · not a real prediction</p>
+  </div>
+</section>
+<section class="feature-grid">
+  <article class="feature"><div class="feature-icon">01</div><h3>Proctored aptitude</h3><p>Timed questions with optional webcam face-presence checks and event logging.</p></article>
+  <article class="feature"><div class="feature-icon">02</div><h3>Placement readiness</h3><p>Combine academics, skills, projects, internships and assessment performance.</p></article>
+  <article class="feature"><div class="feature-icon">03</div><h3>Career analysis</h3><p>Compare role-fit signals and receive concrete next steps for preparation.</p></article>
+</section>
+{% endblock %}
